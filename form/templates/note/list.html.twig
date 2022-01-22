@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-5 mt-5 text-center">
+   <a class="btn btn-success" href="{{ path('add_note') }}">Add new note</a>
+   <h3 class="text-warning text-center  mt-4">Note List</h3>
+   <table class="table table-bordered">
+      <tr>
+         <th>Id</th>
+         <th>Title</th>
+         <th>Content</th>
+         <th>Date</th>
+      </tr>
+      {% for note in notes %}
+         <tr>
+            <td> {{note.id}} </td>
+            <td> {{note.title}} </td>
+            <td> {{note.content}} </td>
+            <td> {{note.date | date('d/m/Y') }}</td>
+         </tr>
+      {% endfor %}    
+   </table>
+</div>
+{% endblock %}

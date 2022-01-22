@@ -1,0 +1,28 @@
+{% extends "layout.html.twig" %}
+
+{% block title %} Employee List {% endblock %}
+
+{% block body %}
+     <div class="container col-md-5 mt-4 text-center">
+        <h3 class="text-capitalize text-success">Employee List</h3>
+        <table class="table table-primary">
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Employee Image</th>
+            </tr>
+            {% for e in employee %}
+                <tr>
+                    <td> {{ e.id }} </td>
+                    <td> {{ e.name }} </td>
+                    <td> 
+                        <a href="{{ path('employee_detail', { 'id' : e.id }) }}">
+                            <img src="{{ e.image }}" width="100" height="100">
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}   
+        </table>
+    </div>
+{% endblock %}
+   

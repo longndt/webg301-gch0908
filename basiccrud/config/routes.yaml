@@ -1,0 +1,4 @@
+mobile_show:
+    path: /{id}
+    controller: App\Dontroller\MobileController::edit
+

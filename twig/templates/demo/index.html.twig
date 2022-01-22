@@ -1,0 +1,57 @@
+{% extends "layout.html.twig" %} 
+
+{% block body %}
+    <h6>Text: {{ text }} </h6>
+    <h6>Number: {{ number }} </h6>
+    <p>Country: 
+    {% for c in country %}
+        <i>{{ c }}</i>
+    {% endfor %}
+    </p>
+    {% set grade = 4.5 %}
+    {% if grade >= 5.0 %}
+        <h5>You have passed the exam</h5>
+    {% else %}
+        <h5>You have failed the exam</h5>
+    {% endif %}
+    {% set gender = 'c' %}
+    {% if gender == 'm' %}
+         <h5>Male</h5>
+    {% elseif gender == 'f' %}
+         <h5>Female</h5>
+    {% else %}
+         <h5>N/A</h5>
+    {% endif %}
+    {% set a = 4 %}
+    {% set b = 5 %}
+    {% set c = 6 %}
+    {% if a>=b and a>=c %}
+        <h6>a is max</h6>
+    {% elseif b>=a and b>=c %}
+        <h6>b is max</h6>
+    {% else %}
+        <h6>c is max</h6>
+    {% endif %}
+    <h6>Largest number: {{ max(a,b,c) }} </h6>
+    {% set number = [1,4,6,10,-2,20,-15]%}
+    <h5>Max: {{ max(number) }}</h5>
+    <h5>Min: {{ min(number) }}</h5>
+    <h6>Random number from 1 to 100: {{ random(1,100) }}</h6>
+    {% for i in 1..20 %}
+        {% if i%2==0 %}
+            {{ i }}
+        {% endif %}
+    {% endfor %}
+    <br>
+    {% for j in range(1,20) %}
+        {% if j%2!=0 %}
+            {{ j }}
+        {% endif %}
+    {% endfor %}
+    {% set word = text | split(" ") %}
+    {% for w in word %}
+        <h6>{{ w }}</h6>
+    {% endfor %}
+{% endblock %}
+    
+ 
