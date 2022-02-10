@@ -10,7 +10,14 @@
         </tr>
             <tr>
                 <td>{{ category.name }}</td>
-                <td> </td>
+                <td> 
+                {% for product in category.products %}
+                <a href="{{ path('product_detail', {'id' : product.id })}}">
+                  {{ product.name }}
+                </a>     
+                    <br>
+                {% endfor %}
+                </td>
                 <td>
                     <a class="btn btn-warning" href="{{ path('category_edit', {'id' : category.id } )}}">Edit</a>
                     <a class="btn btn-danger" href="{{ path('category_delete', {'id' : category.id } )}}"

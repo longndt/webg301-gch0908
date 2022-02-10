@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\CategoryType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/category')]
+#[Route('/')]
 class CategoryController extends AbstractController
 {
    #[Route('', name: 'category_index')]
@@ -43,10 +44,34 @@ class CategoryController extends AbstractController
    #[Route('/add', name: 'category_add')]
    public function categoryAdd(Request $request) {
         $category = new Category;
+        $form = $this->createForm(CategoryType::class,$category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute("category_index");
+        }
+        return $this->renderForm('category/add.html.twig',
+        [
+            'form' => $form
+        ]);
    }
 
    #[Route('/edit/{id}', name: 'category_edit')]
    public function categoryEdit(Request $request, $id) {
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
+        $form = $this->createForm(CategoryType::class,$category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute("category_index");
+        }
+        return $this->renderForm('category/edit.html.twig',
+        [
+            'form' => $form
+        ]);
    }
 }

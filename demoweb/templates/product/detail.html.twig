@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-8 mt-4 text-center">
+    <table class="table table-condensed mt-3">
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Menu</th>
+        </tr>
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>
+                    <img src="{{ product.image }}" width="80" height="80">
+                </td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                <td> 
+                    {% if product.category != null %}
+                    <a href="{{ path('category_detail', {'id' : product.category.id })}}">
+                        {{product.category.name }}
+                    </a>  
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="{{ path('product_edit', {'id' : product.id } )}}">Edit</a>
+                    <a class="btn btn-danger" href="{{ path('product_delete', {'id' : product.id } )}}"
+                    onclick = "return confirm('Do you want to delete this product ?')"
+                    >Delete</a>
+                </td>
+            </tr>
+    </table>
+</div>
+{% endblock %}

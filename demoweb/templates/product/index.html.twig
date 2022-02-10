@@ -1,20 +1,40 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello ProductController!{% endblock %}
+{% extends "base.html.twig" %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/workspace/webg301-gch0908/demoweb/src/Controller/ProductController.php'|file_link(0) }}">src/Controller/ProductController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/workspace/webg301-gch0908/demoweb/templates/product/index.html.twig'|file_link(0) }}">templates/product/index.html.twig</a></code></li>
-    </ul>
+<div class="container col-md-8 mt-4 text-center">
+    <a href="{{ path('product_add')}} ">
+        <img src="{{ asset('images/add.png') }}" width="50" height="50">
+    </a>
+    <table class="table table-condensed mt-3">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Category</th>
+            <th>Menu</th>
+        </tr>
+        {% for p in product %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>
+                <a href="{{ path('product_detail', {'id' : p.id } )}}">{{ p.name }}</a>
+                </td>
+                 <td>
+                    <img src="{{ p.image }}" width="80" height="80">
+                </td>
+                <td> 
+                    {% if p.category != null %}
+                        {{p.category.name }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="{{ path('product_edit', {'id' : p.id } )}}">Edit</a>
+                    <a class="btn btn-danger" href="{{ path('product_delete', {'id' : p.id } )}}"
+                    onclick = "return confirm('Do you want to delete this product ?')"
+                    >Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}
