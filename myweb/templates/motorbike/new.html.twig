@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Motorbike{% endblock %}
+
+{% block body %}
+    <h1>Create new Motorbike</h1>
+
+    {{ include('motorbike/_form.html.twig') }}
+
+    <a href="{{ path('motorbike_index') }}">back to list</a>
+{% endblock %}

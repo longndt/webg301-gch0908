@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+  <h4>University: {{ uni }}</h4>
+  <h4>Semester: {{ sem }}</h4>
+  <h1> Welcome to Vietnam </h1>
+  <table class="table table-primary">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>City</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% set i = 1 %}  
+    {% for c in city %}
+      <tr>
+        <td>{{ i }}</td>
+        <td>{{ c }}</td>
+      </tr>
+      {% set i = i+1 %}
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <img src="{{ asset('images/vietnam.jpg')}}" width="50%" height="50%">
+{% endblock %}
