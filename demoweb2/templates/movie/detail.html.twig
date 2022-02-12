@@ -2,26 +2,29 @@
 
 {% block body %}
 <div class="container col-md-8 text-center">
-    <a class="btn btn-success mt-4 mb-4" href="{{ path('movie_add') }}">
-        ADD
-    </a>
     <table class="table table-striped">
         <tr>
-            <th>Movie Id</th>
             <th>Movie Name</th>
             <th>Movie Poster</th>
+            <th>Movie Year</th>
+            <th>Movie Genre</th>
             <th>Actions</th>
         </tr>
-        {% for movie in movies %}
             <tr>
-                <td>{{ movie.id }}</td>
                 <td>
                     {{ movie.name }}
                 </td>
                 <td>
-                    <a href="{{ path('movie_detail',{'id' : movie.id })}}">
-                        <img src="{{ movie.image }}" width="100" height="100">
-                    </a>
+                     <img src="{{ movie.image }}" width="100" height="100">
+                </td>
+                <td>{{ movie.year }}</td>
+                <td>
+                  {% for genre in movie.genres %}
+                     <a href="{{ path('genre_detail', {'id' : genre.id })}}">
+                          {{ genre.name }}
+                     </a>
+                     <br>
+                  {% endfor %}
                 </td>
                 <td>
                     <a class="btn btn-warning" href="{{ path('movie_edit',{'id' : movie.id })}}">
@@ -34,7 +37,6 @@
                     </a>
                 </td>
             </tr>
-        {% endfor %}
     </table>
 </div>
 {% endblock %}

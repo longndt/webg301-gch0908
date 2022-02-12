@@ -2,9 +2,6 @@
 
 {% block body %}
 <div class="container col-md-8 text-center">
-    <a class="btn btn-success mt-4 mb-4" href="{{ path('genre_add') }}">
-        ADD
-    </a>
     <table class="table table-striped">
         <tr>
             <th>Genre Name</th>
@@ -17,7 +14,9 @@
                 </td>
                 <td>
                   {% for movie in genre.movies %}
-                     {{ movie.name }}
+                    <a href="{{ path('movie_detail', {'id' : movie.id })}}">
+                        {{ movie.name }}
+                    </a>
                      <br>
                   {% endfor %}     
                 </td>
