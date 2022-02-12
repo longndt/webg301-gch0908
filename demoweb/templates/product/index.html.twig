@@ -24,7 +24,9 @@
                 </td>
                 <td> 
                     {% if p.category != null %}
+                    <a href="{{ path('category_detail', {'id' : p.category.id })}}">
                         {{p.category.name }}
+                    </a>  
                     {% endif %}
                 </td>
                 <td>

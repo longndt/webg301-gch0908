@@ -35,9 +35,12 @@ class CategoryController extends AbstractController
    #[Route('/delete/{id}', name: 'category_delete')]
    public function categoryDelete($id) {
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
-        $manager = $this->getDoctrine()->getManager();
-        $manager->remove($category);
-        $manager->flush();
+        //check điều kiện nếu category không còn chứa product thì cho xóa
+        if (count($category->getProducts()) == 0) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($category);
+            $manager->flush();
+        }
         return $this->redirectToRoute("category_index");
    }
 

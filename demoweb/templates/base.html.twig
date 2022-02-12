@@ -15,6 +15,16 @@
         {% endblock %}
     </head>
     <body>
+        {% block header %}
+            <nav class="nav justify-content-center|justify-content-end">
+              <a class="nav-link" href="{{ path('category_index') }}">Category</a>
+              <a class="nav-link" href="{{ path('product_index') }}">Product</a>
+            </nav>
+        {% endblock %}
         {% block body %}{% endblock %}
+
+        {% block footer %}
+         <p class="text text-success text-center">Product Management System - Symfony framework</p>
+        {% endblock %}
     </body>
 </html>
