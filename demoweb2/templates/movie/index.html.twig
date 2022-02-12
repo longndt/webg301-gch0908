@@ -8,7 +8,15 @@
     <table class="table table-striped">
         <tr>
             <th>Movie Id</th>
-            <th>Movie Name</th>
+            <th>
+              <a class="text-decoration-none" href="{{ path("sort_name_asc") }}">
+                    <img src="{{ asset('images/up.png') }}" width="20" height="20">
+                </a>
+            Movie Name
+               <a class="text-decoration-none" href="{{ path("sort_name_desc") }}">
+                    <img src="{{ asset('images/down.png') }}" width="20" height="20">
+                </a>
+            </th>
             <th>Movie Poster</th>
             <th>Actions</th>
         </tr>
@@ -16,7 +24,7 @@
             <tr>
                 <td>{{ movie.id }}</td>
                 <td>
-                    {{ movie.name }}
+                    {{ movie.name }}    
                 </td>
                 <td>
                     <a href="{{ path('movie_detail',{'id' : movie.id })}}">
