@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container col-md-8 text-center">
+    <a class="btn btn-success mt-4 mb-4" href="{{ path('genre_add') }}">
+        ADD
+    </a>
+    <table class="table table-striped">
+        <tr>
+            <th>Genre Name</th>
+            <th>Movie List</th>
+            <th>Actions</th>
+        </tr>
+            <tr>
+                <td>
+                     {{ genre.name }}
+                </td>
+                <td>
+                  {% for movie in genre.movies %}
+                     {{ movie.name }}
+                     <br>
+                  {% endfor %}     
+                </td>
+                <td>
+                    <a class="btn btn-warning" href="{{ path('genre_edit',{'id' : genre.id })}}">
+                        EDIT
+                    </a>
+                    <a class="btn btn-danger" href="{{ path('genre_delete',{'id' : genre.id })}}"
+                        onclick=return confirm('Are you sure to delete this genre ?')
+                    >
+                        DELETE
+                    </a>
+                </td>
+            </tr>
+    </table>
+</div>
+{% endblock %}

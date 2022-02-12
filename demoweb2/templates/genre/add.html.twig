@@ -1,0 +1,9 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-5 text-center">
+   <h3 class="text text-primary mt-3 mb-3">Add new genre</h3>
+   {{ form (form) }}
+</div>
+{% endblock %}
