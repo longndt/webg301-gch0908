@@ -1,20 +1,46 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello AuthorController!{% endblock %}
+{% extends "base.html.twig" %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/workspace/webg301-gch0908/demoweb123/src/Controller/AuthorController.php'|file_link(0) }}">src/Controller/AuthorController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/workspace/webg301-gch0908/demoweb123/templates/author/index.html.twig'|file_link(0) }}">templates/author/index.html.twig</a></code></li>
-    </ul>
+<div class="container col-md-6 mt-5 text-center">
+{# code để hiển thị flash message được gửi từ controller #}
+<div class="container col-md-4">
+    {% for flash in app.flashes('Success') %}
+        <p class="alert alert-warning">{{ flash }}</p>
+    {% endfor %}
+    {% for flash in app.flashes('Error') %}
+        <p class="alert alert-danger">{{ flash }}</p>
+    {% endfor %}
+</div>
+<h1 class="text text-primary">Author List</h1>
+<a href="" class="btn btn-success">Add author</a>
+<table class="table table-primary mt-3">
+    <thead>
+        <tr>
+            <th>Author Id</th>
+            <th>Author Name</th>
+            <th>Author Avatar</th>
+            <th>Menu</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for author in authors %}
+        <tr>
+            <td>{{ author.id }}</td>
+            <td>{{ author.name }}</td>
+            <td>
+                <a href="{{ path ('author_detail', {'id' : author.id })}}">
+                    <img src="{{ author.image }}" width="100" height="100">  
+                </a>        
+            </td>
+            <td>
+            <a href="" class="btn btn-warning">Edit</a>
+            <a href="{{ path ('author_delete', {'id' : author.id })}}" class="btn btn-danger"
+            onclick="return confirm('Are you sure to delete this author ?');"
+            >Delete</a>
+            </td>
+        </tr>
+    {% endfor %}  
+    </tbody>
+</table>
 </div>
 {% endblock %}

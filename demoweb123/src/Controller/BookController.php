@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,5 +56,23 @@ class BookController extends AbstractController
         }
         //redirect về trang book index
         return $this->redirectToRoute('book_index');
+    }
+
+    #[Route('/asc', name: 'sort_title_asc')]
+    public function sortAsc (BookRepository $repository) {
+        $books = $repository->sortTitleAscending();
+        return $this->render("book/index.html.twig",
+        [
+            'books' => $books
+        ]);
+    }
+
+    #[Route('/desc', name: 'sort_title_desc')]
+    public function sortDesc (BookRepository $repository) {
+        $books = $repository->sortTitleDescending();
+        return $this->render("book/index.html.twig",
+        [
+            'books' => $books
+        ]);
     }
 }

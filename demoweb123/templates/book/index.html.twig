@@ -17,7 +17,14 @@
     <thead>
         <tr>
             <th>Book Id</th>
-            <th>Book Title</th>
+            <th>Book Title
+                <a class="text-decoration-none" href="{{ path('sort_title_asc')}}">
+                    <img src="{{asset('images/up.png') }}" width="20" height="20">
+                </a>
+                <a class="text-decoration-none" href="{{ path('sort_title_desc')}}">
+                    <img src="{{asset('images/down.png') }}" width="20" height="20">
+                </a>
+            </th>
             <th>Book Cover</th>
             <th>Menu</th>
         </tr>

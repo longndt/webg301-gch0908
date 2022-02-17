@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Author detail {% endblock %}
+
+{% block body %}
+<div class="container col-md-6 mt-5">
+   <div class="row">
+      <div class="col">
+         <img src="{{ author.image }}" width="300" height="400">  
+      </div>
+      <div class="col text-center mt-3">
+         <h1 class="text text-success">{{ author.name }}</h1>
+         <h2>Birthday: {{ author.birthday | date('d-m-Y') }}</h2>
+         <h2>Address: {{ author.address }}</h2>
+      </div>
+   </div>
+</div>
+{% endblock %}
