@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-6 mt-5">
+   <div class="row">
+      <div class="col">
+         <img src="{{ book.image }}" width="300" height="400">  
+      </div>
+      <div class="col text-center mt-3">
+         <h1 class="text text-success">{{ book.title }}</h1>
+         <h2>Price: {{ book.price }} $</h2>
+         <h2>Quantity: {{ book.quantity }} $</h2>
+         <h2>Published year: {{ book.year }}</h2>
+      </div>
+   </div>
+</div>
+{% endblock %}

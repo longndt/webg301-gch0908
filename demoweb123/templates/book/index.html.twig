@@ -2,8 +2,18 @@
 
 {% block body %}
 <div class="container col-md-6 mt-5 text-center">
+{# code để hiển thị flash message được gửi từ controller #}
+<div class="container col-md-4">
+    {% for flash in app.flashes('Success') %}
+        <p class="alert alert-warning">{{ flash }}</p>
+    {% endfor %}
+    {% for flash in app.flashes('Error') %}
+        <p class="alert alert-danger">{{ flash }}</p>
+    {% endfor %}
+</div>
 <h1 class="text text-primary">Book List</h1>
-<table class="table table-primary">
+<a href="" class="btn btn-success">Add book</a>
+<table class="table table-primary mt-3">
     <thead>
         <tr>
             <th>Book Id</th>
@@ -18,9 +28,17 @@
             <td>{{ book.id }}</td>
             <td>{{ book.title }}</td>
             <td>
-                <img src="{{ book.image }}" width="100" height="100">  
+                <a href="{{ path ('book_detail', {'id' : book.id })}}">
+                    <img src="{{ book.image }}" width="100" height="100">  
+                </a>
+               
             </td>
-            <td></td>
+            <td>
+            <a href="" class="btn btn-warning">Edit</a>
+            <a href="{{ path ('book_delete', {'id' : book.id })}}" class="btn btn-danger"
+            onclick="return confirm('Are you sure to delete this book ?');"
+            >Delete</a>
+            </td>
         </tr>
     {% endfor %}  
     </tbody>

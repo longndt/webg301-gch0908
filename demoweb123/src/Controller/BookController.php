@@ -28,10 +28,32 @@ class BookController extends AbstractController
         //b1: lấy dữ liệu từ db
         //SQL: SELECT * FROM book WHERE id = '$id'
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
+        if ($book == null) {
+            $this->addFlash("Error","Book not found !");
+            //redirect về trang book index
+            return $this->redirectToRoute('book_index');
+        }
         //b2: render ra view gửi kèm dữ liệu ở trên
-        return $this->render("book/index.html.twig",
+        return $this->render("book/detail.html.twig",
         [
             'book' => $book
         ]);
+    }
+
+    #[Route('/delete/{id}', name: 'book_delete')]
+    public function deleteBook ($id) {
+        $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
+        if ($book == null) {
+            $this->addFlash("Error","Book not found !");
+        } else {
+            //gọi đến entity manager để xóa object
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($book);
+            $manager->flush();
+            //gửi message từ controller đến view sau khi xóa thành công
+            $this->addFlash("Success","Delete book succeed !");
+        }
+        //redirect về trang book index
+        return $this->redirectToRoute('book_index');
     }
 }
