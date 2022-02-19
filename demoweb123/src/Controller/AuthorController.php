@@ -48,7 +48,12 @@ class AuthorController extends AbstractController
         $author = $this->getDoctrine()->getRepository(Author::class)->find($id);
         if ($author == null) {
             $this->addFlash("Error","Author not found !");
-        } else {
+        } 
+        //check xem tác giả có tối thiểu 1 sách hay không trước khi xóa
+        else if (count($author->getBooks()) > 0) {
+            $this->addFlash("Error","Can not delete this author !");
+        }
+        else {
             //gọi đến entity manager để xóa object
             $manager = $this->getDoctrine()->getManager();
             $manager->remove($author);
