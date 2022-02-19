@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %} Author detail {% endblock %}
+{% block title %} Book detail {% endblock %}
 
 {% block body %}
 <div class="container col-md-6 mt-5">
@@ -12,6 +12,12 @@
          <h1 class="text text-success">{{ author.name }}</h1>
          <h2>Birthday: {{ author.birthday | date('d-m-Y') }}</h2>
          <h2>Address: {{ author.address }}</h2>
+         <h2>Books: </h2>
+         {% for book in author.books %}
+            <a href="{{ path('book_detail', {'id' : book.id })}}">
+              <h4 class="text text-primary">{{ book.title }}</h4> 
+            </a> 
+         {% endfor %}
       </div>
    </div>
 </div>

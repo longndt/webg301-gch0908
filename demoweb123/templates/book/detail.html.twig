@@ -9,8 +9,14 @@
       <div class="col text-center mt-3">
          <h1 class="text text-success">{{ book.title }}</h1>
          <h2>Price: {{ book.price }} $</h2>
-         <h2>Quantity: {{ book.quantity }} $</h2>
+         <h2>Quantity: {{ book.quantity }}</h2>
          <h2>Published year: {{ book.year }}</h2>
+         <h2>Authors: </h2>
+         {% for author in book.authors %}
+            <a class="text-decoration-none" href="{{ path('author_detail', {'id' : author.id })}}">
+              <h4 class="text text-primary">{{ author.name }}</h4> 
+            </a> 
+         {% endfor %}
       </div>
    </div>
 </div>

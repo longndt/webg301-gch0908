@@ -15,6 +15,12 @@
         {% endblock %}
     </head>
     <body>
+        {# navigation bar     #}
+        <nav class="nav justify-content-center|justify-content-end">
+          <h3><a class="nav-link" href="{{ path('home')}}">Homepage</a></h3>
+          <h3><a class="nav-link" href="{{ path('author_index')}}">Author</a></h3>
+          <h3><a class="nav-link" href="{{ path('book_index')}}">Book</a></h3>
+        </nav>
         {% block body %}{% endblock %}
     </body>
 </html>

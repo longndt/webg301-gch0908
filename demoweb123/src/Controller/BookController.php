@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Form\BookType;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -73,6 +75,40 @@ class BookController extends AbstractController
         return $this->render("book/index.html.twig",
         [
             'books' => $books
+        ]);
+    }
+
+    #[Route('/add', name: 'book_add')]
+    public function addBook (Request $request) {
+        $book = new Book;
+        $form = $this->createForm(BookType::class,$book);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($book);
+            $manager->flush();
+            return $this->redirectToRoute('book_index');
+        }
+        return $this->renderForm('book/add.html.twig',
+        [
+            'bookForm' => $form
+        ]);
+    }
+
+    #[Route('/edit/{id}', name: 'book_edit')]
+    public function editBook (Request $request, $id) {
+        $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
+        $form = $this->createForm(BookType::class,$book);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($book);
+            $manager->flush();
+            return $this->redirectToRoute('book_index');
+        }
+        return $this->renderForm('book/edit.html.twig',
+        [
+            'bookForm' => $form
         ]);
     }
 }

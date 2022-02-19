@@ -12,7 +12,7 @@
     {% endfor %}
 </div>
 <h1 class="text text-success">Book List</h1>
-<a href="" class="btn btn-success">Add book</a>
+<a href="{{ path('book_add') }}" class="btn btn-success">Add book</a>
 <table class="table table-primary mt-3">
     <thead>
         <tr>
@@ -41,7 +41,7 @@
                
             </td>
             <td>
-            <a href="" class="btn btn-warning">Edit</a>
+            <a href="{{ path ('book_edit', {'id' : book.id })}}" class="btn btn-warning">Edit</a>
             <a href="{{ path ('book_delete', {'id' : book.id })}}" class="btn btn-danger"
             onclick="return confirm('Are you sure to delete this book ?');"
             >Delete</a>
