@@ -57,4 +57,11 @@ class MovieRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @return Movie[]
+     */
+    public function searchByName ($keyword) {
+        
+    }
 }
