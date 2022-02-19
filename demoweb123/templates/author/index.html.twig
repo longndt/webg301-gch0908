@@ -13,6 +13,13 @@
 </div>
 <h1 class="text text-primary">Author List</h1>
 <a href="{{ path('author_add') }}" class="btn btn-success">Add author</a>
+<div class="form-group col-md-6 mt-3">
+    <form action="{{ path('author_search') }}" method="post">
+        <input type="search" name="word" required class="form-control"
+        placeholder="Search author name"
+        >
+    </form>
+</div>
 <table class="table table-primary mt-3">
     <thead>
         <tr>

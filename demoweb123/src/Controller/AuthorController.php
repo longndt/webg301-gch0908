@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Author;
 use App\Form\AuthorType;
+use App\Repository\AuthorRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,16 +14,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AuthorController extends AbstractController
 {
     #[Route('', name: 'author_index')]
-    public function ViewAllAuthor() {
+    public function ViewAllAuthor(AuthorRepository $repository) {
         //b1: lấy dữ liệu từ db
         //SQL: SELECT * FROM author
-        $author = $this->getDoctrine()->getRepository(Author::class)->findAll();
+        //$author = $this->getDoctrine()->getRepository(Author::class)->findAll();
+        $author = $repository->viewAuthorList();
         //b2: render ra view gửi kèm dữ liệu ở trên
         return $this->render("author/index.html.twig",
             [
                 'authors' => $author
             ]);
-
     }
 
     #[Route('/detail/{id}', name: 'author_detail')]
@@ -79,7 +80,7 @@ class AuthorController extends AbstractController
     #[Route('/edit/{id}', name: 'author_edit')]
     public function editAuthor (Request $request, $id) {
         $author = $this->getDoctrine()->getRepository(Author::class)->find($id);
-        $form = $this->createForm(AuthorType::class,$author);
+        $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
@@ -87,9 +88,20 @@ class AuthorController extends AbstractController
             $manager->flush();
             return $this->redirectToRoute('author_index');
         }
-        return $this->renderForm('author/edit.html.twig',
-        [
+        return $this->renderForm(
+            'author/edit.html.twig',
+            [
             'authorForm' => $form
-        ]);
+        ]
+        );
+    }
+    #[Route('/search' , name: 'author_search')]
+    public function searchAuthor (Request $request, AuthorRepository $repository) {
+        $name = $request->get('word');
+        $author = $repository->searchAuthor($name);
+            return $this->render("author/index.html.twig",
+            [
+                'authors' => $author
+            ]);
     }
 }
