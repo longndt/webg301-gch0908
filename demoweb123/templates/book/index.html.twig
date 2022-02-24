@@ -12,7 +12,39 @@
     {% endfor %}
 </div>
 <h1 class="text text-success">Book List</h1>
+{% if is_granted('ROLE_ADMIN') %}
 <a href="{{ path('book_add') }}" class="btn btn-success">Add book</a>
+<table class="table table-primary mt-3">
+    <thead>
+        <tr>
+            <th>Book Id</th>
+            <th>Book Title
+                <a class="text-decoration-none" href="{{ path('sort_title_asc')}}">
+                    <img src="{{asset('images/up.png') }}" width="20" height="20">
+                </a>
+                <a class="text-decoration-none" href="{{ path('sort_title_desc')}}">
+                    <img src="{{asset('images/down.png') }}" width="20" height="20">
+                </a>
+            </th>
+            <th>Book Cover</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>
+                <a href="{{ path ('book_detail', {'id' : book.id })}}">
+                    <img src="{{ asset('images/books/'~book.image) }}" width="100" height="100">  
+                </a>
+               
+            </td>
+        </tr>
+    {% endfor %}  
+    </tbody>
+</table>
+{% elseif is_granted('ROLE_MANAGER') %}
 <table class="table table-primary mt-3">
     <thead>
         <tr>
@@ -37,8 +69,7 @@
             <td>
                 <a href="{{ path ('book_detail', {'id' : book.id })}}">
                     <img src="{{ asset('images/books/'~book.image) }}" width="100" height="100">  
-                </a>
-               
+                </a>            
             </td>
             <td>
             <a href="{{ path ('book_edit', {'id' : book.id })}}" class="btn btn-warning">Edit</a>
@@ -50,5 +81,36 @@
     {% endfor %}  
     </tbody>
 </table>
+{% elseif is_granted('ROLE_USER') %}
+<table class="table table-primary mt-3">
+    <thead>
+        <tr>
+            <th>Book Id</th>
+            <th>Book Title
+                <a class="text-decoration-none" href="{{ path('sort_title_asc')}}">
+                    <img src="{{asset('images/up.png') }}" width="20" height="20">
+                </a>
+                <a class="text-decoration-none" href="{{ path('sort_title_desc')}}">
+                    <img src="{{asset('images/down.png') }}" width="20" height="20">
+                </a>
+            </th>
+            <th>Book Cover</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>
+                <a href="{{ path ('book_detail', {'id' : book.id })}}">
+                    <img src="{{ asset('images/books/'~book.image) }}" width="100" height="100">  
+                </a>            
+            </td>
+        </tr>
+    {% endfor %}  
+    </tbody>
+</table>
+{% endif %}    
 </div>
 {% endblock %}

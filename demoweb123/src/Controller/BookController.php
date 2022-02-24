@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use function PHPUnit\Framework\throwException;
 
@@ -46,6 +47,9 @@ class BookController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_MANAGER")
+     */
     #[Route('/delete/{id}', name: 'book_delete')]
     public function deleteBook ($id) {
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);
@@ -81,6 +85,9 @@ class BookController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'book_add')]
     public function addBook (Request $request) {
         $book = new Book;
@@ -119,6 +126,9 @@ class BookController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_MANAGER")
+     */
     #[Route('/edit/{id}', name: 'book_edit')]
     public function editBook (Request $request, $id) {
         $book = $this->getDoctrine()->getRepository(Book::class)->find($id);

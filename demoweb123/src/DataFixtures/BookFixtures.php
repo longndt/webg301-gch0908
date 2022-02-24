@@ -16,7 +16,7 @@ class BookFixtures extends Fixture
             $book->setQuantity(rand(5, 30));
             $book->setYear(rand(2000, 2020));
             $book->setPrice((float)(rand(100,200)));
-            $book->setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsfxrcUtlaLqSTTpA7N9cWKIopvRNtXngM2A&usqp=CAU");
+            $book->setImage("cover.jpg");
             $manager->persist($book);
         }
 
