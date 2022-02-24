@@ -6,6 +6,7 @@ use App\Entity\Author;
 use App\Entity\Book;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -39,7 +40,12 @@ class BookType extends AbstractType
                 'currency' => 'USD'
             ])
             ->add('quantity')
-            ->add('image')
+            ->add('image', FileType::class,
+            [
+                'label' => 'Cover',
+                'data_class' => null,
+                'required' => is_null ($builder->getData()->getImage())
+            ])
             ->add('authors', EntityType::class,
             [
                 'class' => Author::class,

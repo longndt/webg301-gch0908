@@ -6,9 +6,12 @@ use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use function PHPUnit\Framework\throwException;
 
 #[Route('/book')]
 class BookController extends AbstractController
@@ -84,6 +87,27 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class,$book);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //code upload & xử lý tên ảnh
+            //B1: lấy tên ảnh từ file upload
+            $image = $book->getImage();
+            //B2: đặt tên mới cho ảnh
+            //=> đảm bảo tên file ảnh là duy nhất
+            $imgName = uniqid(); //unique id
+            //B3: lấy phần đuôi của ảnh (image extension)
+            $imgExtension = $image->guessExtension();
+            //Note: cần phải cấu hình lại getter & setter trong Entity
+            //B4: merge thành 1 tên file ảnh mới 
+            $imageName = $imgName . '.' . $imgExtension;
+            //B5: di chuyển ảnh đến thư mục chỉ định trong project
+            try {
+                $image->move(
+                    $this->getParameter('book_cover'), $imageName
+                );
+            } catch (FileException $e) {
+                throwException($e);
+            }
+            //B6: set tên ảnh mới để lưu vào DB
+            $book->setImage($imageName);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($book);
             $manager->flush();
