@@ -122,8 +122,13 @@ class Book
 
     public function setImage($image) 
     {
-        $this->image = $image;
-
+        /* nếu người dùng update ảnh mới thì 
+        thay thế bằng ảnh mới còn ngược lại
+        sẽ giữ nguyên ảnh cũ */
+        if ($image != null) {
+            $this->image = $image;
+        }
+       
         return $this;
     }
 }

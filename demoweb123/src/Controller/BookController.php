@@ -125,6 +125,34 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class,$book);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            //code upload & xử lý tên ảnh
+            //B1: lấy dữ liệu ảnh từ form edit
+            $file = $form['image']->getData();      
+            //B2: check xem dữ liệu ảnh có null không
+            //=> người dùng có upload ảnh mới để thay thế hay không
+            if ($file != null) {
+                //B3: lấy tên ảnh từ file upload
+                $image = $book->getImage();
+                //B4: đặt tên mới cho ảnh
+                //=> đảm bảo tên file ảnh là duy nhất
+                $imgName = uniqid(); //unique id
+                //B5: lấy phần đuôi của ảnh (image extension)
+                $imgExtension = $image->guessExtension();
+                //Note: cần phải cấu hình lại getter & setter trong Entity
+                //B6: merge thành 1 tên file ảnh mới
+                $imageName = $imgName . '.' . $imgExtension;
+                //B7: di chuyển ảnh đến thư mục chỉ định trong project
+                try {
+                    $image->move(
+                        $this->getParameter('book_cover'),
+                        $imageName
+                    );
+                } catch (FileException $e) {
+                    throwException($e);
+                }
+                //B8: set tên ảnh mới để lưu vào DB
+                $book->setImage($imageName);
+            }
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($book);
             $manager->flush();
